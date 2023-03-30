@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Список профессий</h2>
+
+{% if tag == 'ol' %}
+<ol>
+    {% for pof in profs %}
+    <li>{{ pof }}</li>
+    {% endfor %}
+</ol>
+{% elif tag == 'ul' %}
+<ul>
+    {% for pof in profs %}
+    <li>{{ pof }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<div class="alert alert-danger" role="alert">
+  Неправильный параметр
+</div>
+
+
+{% endif %}
+
+{% endblock %
