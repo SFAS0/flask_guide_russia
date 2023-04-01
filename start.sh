@@ -22,4 +22,4 @@ fi
 $VIRTUALENV/bin/pip3 install -r requirements.txt
 
 # Run your glorious application
-$VIRTUALENV/bin/python3 work_log.py
+$VIRTUALENV/bin/python3 main_server.py
