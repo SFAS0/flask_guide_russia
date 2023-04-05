@@ -2,7 +2,7 @@ a {
   background-color: red;
   box-shadow: 0 5px 0 darkred;
   color: white;
-  padding: 1em 1.5em;
+  padding: 5em 5em 5em;
   position: relative;
   text-decoration: none;
   text-transform: uppercase;
@@ -23,5 +23,5 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 10vh;
 }
