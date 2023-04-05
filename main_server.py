@@ -34,20 +34,14 @@ class MainPage(FlaskForm):
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    print(request.data)
-    if request.method == 'POST':
-        if request.form['region'] == 'Do Something':
-            return redirect('/regions/123')
-    if request.method == 'GET':
-        return f"""
-        <link rel="stylesheet" href="{url_for('static', filename='css/style.css')}"><div class="wrap">
-        <button class="button" name="region" value="Do Something">Submit</button></div>"""
+    return f"""
+        <link rel="stylesheet" href="{url_for('static', filename='css/style.css')}">
+        <div class="wrap"><a href="/regions/Чукотский АО">Чукотский АО</a></div>"""
     # href="{url_for('static', filename='css/style.css')}">
 
 
 @app.route('/regions/<reg_name>')
 def roots(reg_name):
-    print(reg_name)
     return f'{regoins[regoins.index(reg_name)]}'
 
 
