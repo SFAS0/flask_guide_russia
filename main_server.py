@@ -41,7 +41,7 @@ def main():
 
 @app.route('/regions/<reg_name>')
 def roots(reg_name):
-    return f'{regoins[regoins.index(reg_name)]}'
+    return f'{reg_name}'
 
 
 if __name__ == '__main__':
