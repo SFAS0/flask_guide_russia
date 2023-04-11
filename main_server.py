@@ -1,7 +1,4 @@
 from flask import Flask, url_for, request, redirect, render_template
-from flask_wtf import FlaskForm
-from wtforms import SubmitField
-from wtforms.validators import DataRequired
 
 from data import db_session
 from data.users import User
@@ -12,10 +9,6 @@ from data.geo_regions import Regions
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-
-
-class MainPage(FlaskForm):
-    submit = SubmitField('regions')
 
 
 @app.route('/', methods=['GET', 'POST'])
