@@ -20,7 +20,8 @@ def main():
 
 @app.route('/regions/<reg_name>')
 def roots(reg_name):
-    return f'{reg_name}'
+    param = {'regname': reg_name, 'regimg': 'https://static-maps.yandex.ru/1.x/?ll=30.458673,59.898065&size=650,450&z=7&l=map'}
+    return render_template('info_regs.html', **param)
 
 
 if __name__ == '__main__':
