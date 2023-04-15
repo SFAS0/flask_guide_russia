@@ -11,6 +11,8 @@ from data.geo_regions import Regions
 from forms.user_registration import RegisterForm
 from forms.user_login import LoginForm
 
+import requests
+import xml.etree.ElementTree as ET
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -60,7 +62,15 @@ def roots(dist_name):
 @app.route('/regions/<reg_name>')
 def regions(reg_name):
     reg_info = [reg.info for reg in db.query(Regions).filter(Regions.name == reg_name).all()]
-    param = {'reg_info': reg_info[0], 'reg_name': reg_name}
+    response = requests.get(
+        f'https://geocode-maps.yandex.ru/1.x/?format=json&apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode={reg_name}'
+    )
+    response = response.json()
+    pos = response['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
+    pos = ','.join(pos.split())
+    param = {'reg_info': reg_info[0], 'reg_name': reg_name,
+             'map': f'https://static-maps.yandex.ru/1.x/?ll={pos}&size=650,450&z=5&l=map'
+             }
     return render_template('info_reg.html', **param)
 
 
