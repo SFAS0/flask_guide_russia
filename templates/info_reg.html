@@ -3,12 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_info_reg.css') }}">
 </head>
 <body>
-<h1>{{ regname }}</h1>
+<h1>{{ reg_name }}</h1>
 <header>
+    <p>{{  reg_info  }}<p/>
     <img src="{{ regimg }}">
 </header>
+<img src="{{ url_for('static', filename='img/back.jpg') }}" class="background" />
 </body>
 </html>

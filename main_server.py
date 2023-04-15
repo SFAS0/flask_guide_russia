@@ -59,13 +59,9 @@ def roots(dist_name):
 
 @app.route('/regions/<reg_name>')
 def regions(reg_name):
-    # print([reg_name])
-    # # all_regs = [reg.name for reg in db.query(Regions).all()]
-    # regsinfo = [reg.info for reg in db.query(Regions).filter(Regions.name == reg_name).all()]
-    # print(list(regsinfo))
-    return ''
-    # param = {}
-    # return render_template('regs_page.html', **param)
+    reg_info = [reg.info for reg in db.query(Regions).filter(Regions.name == reg_name).all()]
+    param = {'reg_info': reg_info[0], 'reg_name': reg_name}
+    return render_template('info_reg.html', **param)
 
 
 @app.route('/register', methods=['GET', 'POST'])
