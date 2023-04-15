@@ -27,9 +27,45 @@ def main():
     # href="{url_for('static', filename='css/style.css')}">
 
 
+@app.route('/district/<dist_name>')
+def roots(dist_name):
+    # all_regs = [reg.name for reg in db.query(Regions).all()]
+    dists = [dist.name for dist in db.query(District).all()]
+    regs_of_dist = []
+    for i in range(8):
+        regs_of_dist.append({dists[i]: [dist.name for dist in
+                                        db.query(Regions).filter(Regions.district_id == i + 1).all()]})
+    regs = []
+    for i in regs_of_dist:
+        if dist_name in i:
+            regs = i[dist_name]
+    kon_regs = []
+    regs.reverse()
+    a = len(regs) / 4
+    b = len(regs) // 4
+    if a > b:
+        a = b + 1
+    else:
+        a = b
+    for i in range(a):
+        if len(regs) > 4:
+            kon_regs.append([regs.pop(), regs.pop(), regs.pop(), regs.pop()])
+        else:
+            regs.reverse()
+            kon_regs.append([j for j in regs])
+    param = {'all_regs': kon_regs, 'back': "static/img/back.jpg"}
+    return render_template('regs_page.html', **param)
+
+
 @app.route('/regions/<reg_name>')
-def roots(reg_name):
-    return f'{reg_name}'
+def regions(reg_name):
+    # print([reg_name])
+    # # all_regs = [reg.name for reg in db.query(Regions).all()]
+    # regsinfo = [reg.info for reg in db.query(Regions).filter(Regions.name == reg_name).all()]
+    # print(list(regsinfo))
+    return ''
+    # param = {}
+    # return render_template('regs_page.html', **param)
 
 
 @app.route('/register', methods=['GET', 'POST'])

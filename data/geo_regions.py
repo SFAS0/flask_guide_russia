@@ -9,5 +9,6 @@ class Regions(SqlAlchemyBase):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, unique=True)
     district_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('district.id'), primary_key=True)
     name = sqlalchemy.Column(sqlalchemy.Text)
+    info = sqlalchemy.Column(sqlalchemy.Text)
 
     dist_id = orm.relationship('District')
