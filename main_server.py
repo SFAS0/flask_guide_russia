@@ -1,35 +1,79 @@
-from flask import Flask, url_for, request, redirect, render_template
-from flask_wtf import FlaskForm
-from wtforms import SubmitField
-from wtforms.validators import DataRequired
+import requests
+from flask import Flask, redirect, render_template
+from flask_login import LoginManager, login_user, login_required, logout_user
 
 from data import db_session
-from data.users import User
-from data.history_of_requests import HistoryOfRequests
 from data.district import District
 from data.geo_regions import Regions
-from forms.user_registration import RegisterForm
+from data.users import User
 from forms.user_login import LoginForm
-
+from forms.user_registration import RegisterForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
+login_manager = LoginManager()
+login_manager.init_app(app)
 
-class MainPage(FlaskForm):
-    submit = SubmitField('regions')
+
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.query(User).get(user_id)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
     param = {'all_regs': new_dist}
     return render_template('main_page.html', **param)
-    # href="{url_for('static', filename='css/style.css')}">
+
+
+@app.route('/district/<dist_name>')
+@login_required
+def roots(dist_name):
+    db_sess = db_session.create_session()
+    dists = [dist.name for dist in db_sess.query(District).all()]
+    regs_of_dist = []
+    for i in range(8):
+        regs_of_dist.append({dists[i]: [dist.name for dist in
+                                        db_sess.query(Regions).filter(Regions.district_id == i + 1).all()]})
+    regs = []
+    for i in regs_of_dist:
+        if dist_name in i:
+            regs = i[dist_name]
+    kon_regs = []
+    regs.reverse()
+    a = len(regs) / 4
+    b = len(regs) // 4
+    if a > b:
+        a = b + 1
+    else:
+        a = b
+    for i in range(a):
+        if len(regs) > 4:
+            kon_regs.append([regs.pop(), regs.pop(), regs.pop(), regs.pop()])
+        else:
+            regs.reverse()
+            kon_regs.append([j for j in regs])
+    param = {'all_regs': kon_regs, 'back': "static/img/back.jpg"}
+    return render_template('regs_page.html', **param)
 
 
 @app.route('/regions/<reg_name>')
-def roots(reg_name):
-    return f'{reg_name}'
+@login_required
+def regions(reg_name):
+    db_sess = db_session.create_session()
+    reg_info = [reg.info for reg in db_sess.query(Regions).filter(Regions.name == reg_name).all()]
+    response = requests.get(
+        f'https://geocode-maps.yandex.ru/1.x/?format=json&apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode={reg_name}'
+    )
+    response = response.json()
+    pos = response['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
+    pos = ','.join(pos.split())
+    param = {'reg_info': reg_info[0], 'reg_name': reg_name,
+             'map': f'https://static-maps.yandex.ru/1.x/?ll={pos}&size=650,450&z=5&l=map'
+             }
+    return render_template('info_reg.html', **param)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -45,9 +89,11 @@ def register():
             password=form.password.data
         )
         user.set_password(form.password.data)
-        db.add(user)
-        db.commit()
-        return redirect('/login')
+        db_sess = db_session.create_session()
+        db_sess.add(user)
+        db_sess.commit()
+        login_user(user, remember=True)
+        return redirect('/')
     return render_template('register.html', title='Регистрация', form=form)
 
 
@@ -55,14 +101,22 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect('/success')
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(User.login == form.login.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            return redirect("/")
+        return render_template('login.html',
+                               message="Неправильный логин или пароль",
+                               form=form)
     return render_template('login.html', title='Авторизация', form=form)
 
 
-@app.route('/success', methods=['GET', 'POST'])
-def success():
-    # не готово
-    render_template('login.html', title='Авторизация', form={})
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/register")
 
 
 if __name__ == '__main__':
