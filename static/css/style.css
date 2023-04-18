@@ -1,6 +1,50 @@
-h1 {
+h1 {position: relative;
+  z-index: 2;
 color: #ffffff; font-family: ‘Raleway’,sans-serif; font-size: 62px; font-weight: 800;
  line-height: 72px; margin: 0 0 24px; text-align: center; text-transform: uppercase;
+ text-shadow:
+		-0   -1px 1px #000000,
+		 0   -1px 1px #000000,
+		-0    1px 1px #000000,
+		 0    1px 1px #000000,
+		-1px -0   1px #000000,
+		 1px -0   1px #000000,
+		-1px  0   1px #000000,
+		 1px  0   1px #000000,
+		-1px -1px 1px #000000,
+		 1px -1px 1px #000000,
+		-1px  1px 1px #000000,
+		 1px  1px 1px #000000,
+		-1px -1px 1px #000000,
+		 1px -1px 1px #000000,
+		-1px  1px 1px #000000,
+		 1px  1px 1px #000000;
+}
+p{  position: relative;
+    z-index: 2;
+	font-family: ‘Raleway’,sans-serif;
+	font-size: 25px;
+	font-weight: 500;
+	color: #f8f8f8;
+	line-height: 32px;
+	margin: 0 0 24px;
+	text-shadow:
+		-0   -1px 1px #000000,
+		 0   -1px 1px #000000,
+		-0    1px 1px #000000,
+		 0    1px 1px #000000,
+		-1px -0   1px #000000,
+		 1px -0   1px #000000,
+		-1px  0   1px #000000,
+		 1px  0   1px #000000,
+		-1px -1px 1px #000000,
+		 1px -1px 1px #000000,
+		-1px  1px 1px #000000,
+		 1px  1px 1px #000000,
+		-1px -1px 1px #000000,
+		 1px -1px 1px #000000,
+		-1px  1px 1px #000000,
+		 1px  1px 1px #000000;
 }
 img.background {
   min-height: 100%;
@@ -8,6 +52,7 @@ img.background {
   width: 100%;
   height: auto;
   position: fixed;
+  z-index: 1;
   background-position: top;
   background-repeat: no-repeat;
   top: 0;
@@ -27,16 +72,19 @@ a {
   position: relative;
   text-decoration: none;
   text-transform: uppercase;
+  z-index: 2;
 }
 
 a:hover {
   background-color: rgba(205, 214, 219, 0.5);
   cursor: pointer;
+  z-index: 2;
 }
 
 a:active {
   box-shadow: none;
   top: 5px;
+  z-index: 2;
 }
 
 /* Non-Demo Styles */
@@ -45,8 +93,10 @@ body {
   justify-content: center;
   align-items: center;
   height: 10vh;
+  z-index: 2;
 }
 
 form {
 position: relative;
+z-index: 2;
 }
