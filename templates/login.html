@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% for i in range(30) %}
+        <br>
+    {% endfor %}
     <h1>Авторизация</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}

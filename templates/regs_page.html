@@ -1,12 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-<img src="{{ url_for('static', filename='img/back.jpg') }}" class="background" />
+{% extends "base.html" %}
+
+{% block content %}
 <header>
     {% for i in range(50) %}
         <br>
@@ -21,5 +15,4 @@
     {% endfor %}
     </ul>
 </header>
-</body>
-</html>
+{% endblock %}

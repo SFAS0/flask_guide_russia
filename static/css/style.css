@@ -8,6 +8,8 @@ img.background {
   width: 100%;
   height: auto;
   position: fixed;
+  background-position: top;
+  background-repeat: no-repeat;
   top: 0;
   left: 0;
   @media screen and (max-width: 640px){
@@ -43,4 +45,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 10vh;
+}
+
+form {
+position: relative;
 }
