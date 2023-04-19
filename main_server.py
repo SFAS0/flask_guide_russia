@@ -55,7 +55,7 @@ def roots(dist_name):
         else:
             regs.reverse()
             kon_regs.append([j for j in regs])
-    param = {'all_regs': kon_regs, 'back': "static/img/back.jpg"}
+    param = {'all_regs': kon_regs}
     return render_template('regs_page.html', **param)
 
 
