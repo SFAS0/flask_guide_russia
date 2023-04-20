@@ -29,7 +29,6 @@ def main():
 
 
 @app.route('/district/<dist_name>')
-@login_required
 def roots(dist_name):
     db_sess = db_session.create_session()
     dists = [dist.name for dist in db_sess.query(District).all()]
@@ -60,7 +59,6 @@ def roots(dist_name):
 
 
 @app.route('/regions/<reg_name>')
-@login_required
 def regions(reg_name):
     db_sess = db_session.create_session()
     reg_info = [reg.info for reg in db_sess.query(Regions).filter(Regions.name == reg_name).all()]
