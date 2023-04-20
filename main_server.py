@@ -28,8 +28,8 @@ def main():
     return render_template('main_page.html', **param)
 
 
-@app.route('/district/<dist_name>')
-def roots(dist_name):
+@app.route('/district/<okrug_name>')
+def federal_okrugs(okrug_name):
     db_sess = db_session.create_session()
     dists = [dist.name for dist in db_sess.query(District).all()]
     regs_of_dist = []
@@ -38,8 +38,8 @@ def roots(dist_name):
                                         db_sess.query(Regions).filter(Regions.district_id == i + 1).all()]})
     regs = []
     for i in regs_of_dist:
-        if dist_name in i:
-            regs = i[dist_name]
+        if okrug_name in i:
+            regs = i[okrug_name]
     kon_regs = []
     regs.reverse()
     a = len(regs) / 4
