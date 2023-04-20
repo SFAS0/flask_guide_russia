@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+    {% for regs in all_regs %}
+        {% for reg in regs %}
+        <div class="card" style="width: 18rem; margin: 1rem; padding: 0.5rem;">
+            <h5>{{ reg }}</h5>
+    <a href="/district/{{ reg }}">Подробнее...</a>
+  </div>
+        {% endfor %}
+    {% endfor %}
+    </div>
+{% endblock %}
