@@ -1,3 +1,4 @@
+import os
 import requests
 from flask import Flask, redirect, render_template
 from flask_login import LoginManager, login_user, login_required, logout_user
@@ -63,13 +64,17 @@ def regions(reg_name):
     db_sess = db_session.create_session()
     reg_info = [reg.info for reg in db_sess.query(Regions).filter(Regions.name == reg_name).all()]
     response = requests.get(
-        f'https://geocode-maps.yandex.ru/1.x/?format=json&apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode={reg_name}'
+        f'https://geocode-maps.yandex.ru/1.x/'
+        f'?format=json&apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode={reg_name}'
     )
     response = response.json()
     pos = response['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
     pos = ','.join(pos.split())
+    response = requests.get(f'https://static-maps.yandex.ru/1.x/?ll={pos}&size=650,450&z=5&l=map')
+    with open('static/img/map.jpeg', mode='wb') as map_file:
+        map_file.write(response.content)
     param = {'reg_info': reg_info[0], 'reg_name': reg_name,
-             'map': f'https://static-maps.yandex.ru/1.x/?ll={pos}&size=650,450&z=5&l=map'
+             'map': 'img/map.jpeg'
              }
     return render_template('info_reg.html', **param)
 
