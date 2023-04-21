@@ -24,7 +24,7 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    param = {'all_regs': new_dist}
+    param = {'all_regs': new_dist, 'title': "Федеральные округа России"}
     return render_template('main_page.html', **param)
 
 
