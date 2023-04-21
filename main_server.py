@@ -1,9 +1,8 @@
-import os
 import requests
 from flask import Flask, redirect, render_template
 from flask_login import LoginManager, login_user, login_required, logout_user
 
-from data import db_session, federal_okrugs_api, federal_okrug_api
+from data import db_session, federal_okrugs_api, regions_api
 from data.district import District
 from data.geo_regions import Regions
 from data.users import User
@@ -128,5 +127,5 @@ if __name__ == '__main__':
     districts = sorted([dist.name for dist in db.query(District).all()])
     new_dist = [districts[:3], districts[3:6], districts[6:]]
     app.register_blueprint(federal_okrugs_api.blueprint)
-    app.register_blueprint(federal_okrug_api.blueprint)
+    app.register_blueprint(regions_api.blueprint)
     app.run(port=8080, host='127.0.0.1')
