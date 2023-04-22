@@ -11,7 +11,10 @@
     <header>
         <nav class="navbar">
           {% if current_user.is_authenticated %}
-    <a class="navbar-brand" href="/logout">{{ current_user.login }}</a>
+            <p>
+            <a class="navbar-brand" href="/logout">{{ current_user.login }}</a>
+            <a class="navbar-brand" href="/history">История</a>
+                </p>
         {% else %}
          <p>
         <a class="btn btn-primary " href="/register">Зарегистрироваться</a>

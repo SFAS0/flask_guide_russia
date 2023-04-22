@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>История</h1>
+    <form action="" method="post">
+        {% for req in requests %}
+        <p>
+            <h5>{{ req.time }}</h5>
+            <a class="navbar-brand" href={{ req.link }}>{{ req.link }}</a>
+        </p>
+        {% endfor %}
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}
