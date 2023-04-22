@@ -7,7 +7,8 @@ from sqlalchemy import orm
 class HistoryOfRequests(SqlAlchemyBase):
     __tablename__ = 'history_of_requests'
 
-    user = sqlalchemy.Column(sqlalchemy.Text, nullable=True, primary_key=True)
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+    user = sqlalchemy.Column(sqlalchemy.Text, nullable=True)
     time = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.now)
     link = sqlalchemy.Column(sqlalchemy.Text, nullable=True)
 
