@@ -24,6 +24,11 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
+@app.errorhandler(401)
+def unauthorized(error):
+    return redirect('/')
+
+
 @app.route('/', methods=['GET', 'POST'])
 def main():
     param = {'all_regs': new_dist, 'title': "Федеральные округа России"}
